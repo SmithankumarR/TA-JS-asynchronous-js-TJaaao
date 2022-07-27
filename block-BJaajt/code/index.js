@@ -1,33 +1,80 @@
-const input = document.querySelector('input');
-const img = document.querySelector('img');
-const Uname = document.querySelector('h3');
-const workingAt = document.querySelector('p');
-const followers = document.querySelector('.followers');
-const following = document.querySelector('.following');
+let search = document.querySelector('.search');
+let proImg = document.querySelector('.felxi-img');
+let h1 = document.querySelector('h1');
+let h3 = document.querySelector('h3');
+let follower = document.querySelectorAll('.small-img1');
+let following = document.querySelectorAll('.small-img2');
 
-function displayUI(data) {
-  img.src = data.avatar_url;
-  Uname.innerText = data.name;
-  workingAt.innerText = data.company;
-  followers.innerText = `Followers : ${data.followers_url}`;
-  following.innerText = `Following : ${data.following_url}`;
+function createUI(data) {
+  proImg.src = data.avatar_url;
+  h1.innerText = data.name;
+  h3.innerText = '@' + data.login;
 }
-// 3EaNL3GXO-XKEmOPAauXXOI3kF5mQ9fzSEvOAG7J0F4
-// https://unsplash.com/photos/random
-function handleChange(event) {
-  if (event.keyCode === 13) {
+let handleSearch = (e) => {
+  if (e.keyCode == 13) {
+    let username = e.target.value;
+
+    //
     let xhr = new XMLHttpRequest();
-    xhr.open('GET',`https://api.github.com/users/${event.target.value}`);
+    xhr.open('GET', `https://api.github.com/users/${username}`);
     xhr.onload = function () {
       let userData = JSON.parse(xhr.response);
-      displayUI(userData);
-    };
-    xhr.onerror = function () {
-      console.log('Something went wrong');
+      console.log(userData);
+      createUI(userData);
     };
     xhr.send();
-    event.target.value = "";
+    //xhr2 is for follower
+    let xhr2 = new XMLHttpRequest();
+    xhr2.open('GET', `https://api.github.com/users/${username}/followers`);
+    xhr2.onload = function () {
+      let arrOfFollower = JSON.parse(xhr2.response);
+      follower.forEach((e, i) => {
+        e.src = arrOfFollower[i].avatar_url;
+      });
+    };
+    xhr2.send();
+
+    //xhr3 is for following
+    let xhr3 = new XMLHttpRequest();
+    xhr3.open('GET', `https://api.github.com/users/${username}/following`);
+    xhr3.onload = function () {
+      let arrOfFollower = JSON.parse(xhr3.response);
+      following.forEach((e, i) => {
+        e.src = arrOfFollower[i].avatar_url;
+      });
+    };
+    xhr3.send();
   }
+};
+search.addEventListener('keyup', (e) => {
+  handleSearch(e);
+});
+
+//
+
+let cat = document.querySelector('.cat');
+let btn = document.querySelector('.btn');
+
+function handleClick() {
+  let xhr = new XMLHttpRequest();
+  xhr.open(
+    'GET',
+    `https://api.thecatapi.com/v1/images/search?limit=1&size=full`
+  );
+  xhr.onload = function () {
+    let catData = JSON.parse(xhr.response);
+    console.log(catData);
+    cat.innerHTML = '';
+    let image = document.createElement('img');
+    image.alt = 'cat';
+    image.src = './pic.jpeg';
+
+    image.src = catData[0].url;
+    cat.append(image);
+  };
+  xhr.send();
 }
 
-input.addEventListener('keyup', handleChange);
+btn.addEventListener('click', (e) => {
+  handleClick(e);
+});
