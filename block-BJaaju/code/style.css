@@ -136,7 +136,7 @@ table {
 
 body {
     font-size: 20px;
-    background-color: #f1deb8;
+    background:linear-gradient(to right,rgb(153,150,241),rgb(251,201,213));
 }
 
 .flex {
