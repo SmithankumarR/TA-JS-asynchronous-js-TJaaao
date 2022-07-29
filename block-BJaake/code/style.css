@@ -130,6 +130,7 @@ table {
 /* my styles */
 body {
   background-color: #f1deb8;
+  background: linear-gradient(to right ,rgb(115,198,240),rgb(2,80,146));
   font-size: 20px;
 }
 .container {
@@ -141,10 +142,13 @@ body {
 }
 .flex-50 {
   flex: 0 1 48%;
-  margin: 1%;
+  margin: 1rem;
 }
-.jcc {
-  justify-content: center;
+.jcb {
+  justify-content: space-between;
+}
+.pcc {
+  place-content: center;
 }
 header {
   background-color: black;
@@ -159,24 +163,26 @@ h1 {
 #newsAgency {
   width: 15rem;
   padding: 1rem;
+  display: block;
+  margin: 2rem auto;
 }
-.select-div {
-  padding: 1rem 0;
+.imgdiv {
+  width: 100%;
 }
-.root {
-  max-width: 700px;
+.news {
+  max-width: 900px;
   margin: 0 auto;
 }
 .news img {
-  height: 10rem;
   width: 100%;
+  height: auto;
 }
-
-.news p {
+.news h3 {
   font-size: 1rem;
   font-weight: 600;
   margin: 1rem 0;
 }
+
 .btn {
   display: inline-block;
   text-decoration: none;
@@ -187,8 +193,10 @@ h1 {
   background-color: #34797a;
   color: white;
   border-radius: 40px;
+  border: 0;
 }
 .btn-sec {
   background-color: black;
   color: white;
+  border: 0;
 }
